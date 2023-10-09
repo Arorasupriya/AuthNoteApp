@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "784875649035",
+    "project_id": "noteauth-2a72b",
+    "storage_bucket": "noteauth-2a72b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784875649035:android:42e1fcb66d5a0ee6b9af0e",
+        "android_client_info": {
+          "package_name": "com.example.login_note_fb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqv8Eq8e6X8gRJMmkbbOgJLLDFiVmPBcA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
