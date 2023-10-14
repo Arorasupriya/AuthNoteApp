@@ -1,28 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:login_note_fb/constants/app_colors.dart';
 import 'package:login_note_fb/constants/image_constant.dart';
+import 'package:login_note_fb/constants/my_text_styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppVariables {
-  //ListTypeVariables
-  static List<Map<String, dynamic>> categories = [
-    {"id": 1, "name": "Travel", "img": ImageConstant.travelPath},
-    {"id": 2, "name": "Shopping", "img": ImageConstant.shoppingPath},
-    {
-      "id": 3,
-      "name": "MobileRecharge",
-      "img": ImageConstant.mobileRechargePath
-    },
-    {"id": 4, "name": "Parlour", "img": ImageConstant.parlourPath},
-    {"id": 5, "name": "Pet Food", "img": ImageConstant.petFoodPath},
-    {"id": 6, "name": "Movie", "img": ImageConstant.moviePath},
-    {"id": 7, "name": "Restaurant", "img": ImageConstant.restaurantPath},
-    {"id": 8, "name": "Pug", "img": ImageConstant.pugPath},
-  ];
-
   ///Variables
   static late String title;
   static late bool isDark;
+
+
 
   //Keys use in App
   static const String IS_LOGGED_IN_USER = "loggedIn";
@@ -47,6 +34,7 @@ Future<String> getUserIdFromSP() async {
   id = pre.getString(AppVariables.USER_ID);
   return id ?? " ";
 }
+
 Future<String> getUserEmailFromSP() async {
   SharedPreferences pre = await SharedPreferences.getInstance();
   String userEmail;
@@ -94,3 +82,10 @@ String convertStringToDateTimeObjectToString(String myDateTime){
   print("new date $formatedDateTime");
   return formatedDateTime;
 }
+
+
+
+
+
+
+

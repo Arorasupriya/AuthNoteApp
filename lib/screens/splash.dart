@@ -47,27 +47,40 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Note App",
-              style: mTextStyle25(
-                  mWeight: FontWeight.bold,
-                  mFontColor: ColorConstant.mattBlackColor),
-            ),
-            hSpacer(mHeight: 10),
-            CircleAvatar(
-              radius: 50,
-              backgroundColor: ColorConstant.greyColor,
-              child: Image.asset(
-                "assets/icons/ic_notes.png",
-                width: 40,
-                height: 40,
+      backgroundColor: Colors.transparent,
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[
+              ColorConstant.gradiantDarkColor,
+              ColorConstant.gradiantLightColor
+            ])),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Note App",
+                style: mTextStyle25(
+                    mWeight: FontWeight.bold,
+                    mFontColor: ColorConstant.fontBlackColor),
               ),
-            )
-          ],
+              hSpacer(mHeight: 10),
+              CircleAvatar(
+                radius: 50,
+                backgroundColor: ColorConstant.gradiantDarkColor,
+                child: Image.asset(
+                  "assets/icons/ic_notes.png",
+                  width: 40,
+                  height: 40,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

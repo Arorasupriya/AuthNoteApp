@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:login_note_fb/constants/app_colors.dart';
+import 'package:login_note_fb/constants/custom_widget.dart';
 import 'package:login_note_fb/model/data_model.dart';
 import 'package:login_note_fb/screens/note_detail.dart';
 
@@ -27,9 +29,21 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
-        backgroundColor: Colors.cyanAccent.withAlpha(120),
-        body: StreamBuilder(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        height: size.height,
+        width: size.width,
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+              ColorConstant.gradiantDarkColor,
+              ColorConstant.gradiantLightColor
+            ])),
+        child: StreamBuilder(
             stream: db
                 .collection("users")
                 .doc(widget.id)
@@ -47,149 +61,15 @@ class _DashboardState extends State<Dashboard> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Notes",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 25,
-                                color: Colors.white),
-                          ),
-                          IconButton(
-                              onPressed: () {
-                                showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(21),
-                                            topLeft: Radius.circular(21))),
-                                    context: context,
-                                    builder: (context) {
-                                      return Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: MediaQuery.of(context)
-                                                .viewInsets
-                                                .bottom),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            const Padding(
-                                              padding: EdgeInsets.all(4.0),
-                                              child: Text(
-                                                "Add Note",
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    color: Colors.black),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            SizedBox(
-                                              height: 50,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 8),
-                                                child: TextField(
-                                                  style: const TextStyle(
-                                                      fontSize: 12),
-                                                  controller: titleController,
-                                                  decoration: InputDecoration(
-                                                      hintText: "Enter Title",
-                                                      border:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          21))),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 8),
-                                              child: TextField(
-                                                style: const TextStyle(
-                                                    fontSize: 12),
-                                                controller: descController,
-                                                maxLines: 8,
-                                                decoration: InputDecoration(
-                                                    hintText:
-                                                        "Enter Description",
-                                                    border: OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(21))),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            ElevatedButton(
-                                                onPressed: () {
-                                                  var title = titleController
-                                                      .text
-                                                      .toString();
-                                                  var desc = descController.text
-                                                      .toString();
-                                                  DateTime nowDT =
-                                                      DateTime.now();
-                                                  String formattedDate =
-                                                      DateFormat('EEE d MMM')
-                                                          .format(nowDT);
-                                                  db
-                                                      .collection("users")
-                                                      .doc(widget.id)
-                                                      .collection("notes")
-                                                      .add(DataModel(
-                                                              title: title,
-                                                              desc: desc,
-                                                              dateTime:
-                                                                  formattedDate)
-                                                          .toJson())
-                                                      .then((value) {
-                                                    print(value);
-                                                  });
-                                                  titleController.clear();
-                                                  descController.clear();
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Text(
-                                                  "Add",
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      color:
-                                                          Colors.cyan.shade500),
-                                                ))
-                                          ],
-                                        ),
-                                      );
-                                    });
-                              },
-                              icon: const Icon(
-                                Icons.add,
-                                size: 30,
-                                fill: 1.0,
-                                color: Colors.white,
-                              ))
-                        ],
-                      ),
+                      hSpacer(),
                       const Text(
                         "Recent",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
-                            color: Colors.white),
+                            color: ColorConstant.fontBlackColor),
                       ),
+                      hSpacer(),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(
@@ -264,8 +144,9 @@ class _DashboardState extends State<Dashboard> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
-                            color: Colors.white),
+                            color: ColorConstant.fontBlackColor),
                       ),
+                      hSpacer(),
                       Expanded(
                           flex: 2,
                           child: ListView.builder(
@@ -338,7 +219,7 @@ class _DashboardState extends State<Dashboard> {
                                                       print("Deleted Record");
                                                     });
                                                   },
-                                                  child: Icon(
+                                                  child: const Icon(
                                                     Icons.delete,
                                                     color: Colors.white,
                                                     size: 25,
@@ -354,6 +235,130 @@ class _DashboardState extends State<Dashboard> {
                 );
               }
               return Container();
-            }));
+            }),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: ColorConstant.gradiantDarkColor,
+        shape: const CircleBorder(),
+        onPressed: () {
+          showModalBottomSheet(
+              backgroundColor: ColorConstant.gradiantDarkColor,
+              isScrollControlled: true,
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(21),
+                      topLeft: Radius.circular(21))),
+              context: context,
+              builder: (context) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      hSpacer(),
+                      const Padding(
+                        padding: EdgeInsets.all(4.0),
+                        child: Text(
+                          "Add Note",
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        height: 50,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: TextField(
+                            style: const TextStyle(fontSize: 12),
+                            controller: titleController,
+                            decoration: InputDecoration(
+                                hintText: "Enter Title",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(21)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color:
+                                            ColorConstant.gradiantLightColor),
+                                    borderRadius: BorderRadius.circular(21)),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color:
+                                            ColorConstant.gradiantLightColor),
+                                    borderRadius: BorderRadius.circular(21))),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: TextField(
+                          style: const TextStyle(fontSize: 12),
+                          controller: descController,
+                          maxLines: 8,
+                          decoration: InputDecoration(
+                              hintText: "Enter Description",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(21)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: ColorConstant.gradiantLightColor),
+                                  borderRadius: BorderRadius.circular(21)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: ColorConstant.gradiantLightColor),
+                                  borderRadius: BorderRadius.circular(21))),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(backgroundColor: ColorConstant.gradiantLightColor),
+                          onPressed: () {
+                            var title = titleController.text.toString();
+                            var desc = descController.text.toString();
+                            DateTime nowDT = DateTime.now();
+                            String formattedDate =
+                                DateFormat('EEE d MMM').format(nowDT);
+                            db
+                                .collection("users")
+                                .doc(widget.id)
+                                .collection("notes")
+                                .add(DataModel(
+                                        title: title,
+                                        desc: desc,
+                                        dateTime: formattedDate)
+                                    .toJson())
+                                .then((value) {
+                              print(value);
+                            });
+                            titleController.clear();
+                            descController.clear();
+                            Navigator.pop(context);
+                          },
+                          child: const Text(
+                            "Add",
+                            style: TextStyle(
+                                fontSize: 12, color: ColorConstant.fontBlackColor),
+                          ))
+                    ],
+                  ),
+                );
+              });
+        },
+        child: const Icon(
+          Icons.add,
+          size: 30,
+          fill: 1.0,
+          color: ColorConstant.fontBlackColor,
+        ),
+      ),
+    );
   }
 }

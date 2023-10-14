@@ -6,13 +6,13 @@ InputDecoration myDecoration({
   required String mHintText,
   required String mLabelText,
   double bRadius = 21.0,
-  Color bColor = Colors.blueGrey,
+  Color bColor = ColorConstant.gradiantDarkColor,
   Color mFillColor = Colors.white12,
-  bool isFilled = false,
+  bool isFilled = true,
   IconData? preFixIconName,
   IconData? surFixIconName,
   VoidCallback? onSurFixIconTap,
-  Color mySuffixIconColor = Colors.blue,
+  Color mySuffixIconColor = ColorConstant.gradiantDarkColor,
 }) {
   return InputDecoration(
     contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
@@ -73,6 +73,47 @@ Widget customElevatedButton ({
         minimumSize: Size(mButtonWidth!, mButtonHeight!)
     ) ,
     child: isChildText ? Text(title!,style: mTextStyle12(mFontColor:ColorConstant.greyColor),):Icon(iconName),);
+}
+
+class MyGElevatedButton extends StatelessWidget {
+  final BorderRadiusGeometry? borderRadius;
+  final double? width;
+  final double height;
+  final Gradient gradient;
+  final VoidCallback? onPressed;
+  final Widget child;
+
+  const MyGElevatedButton({
+    Key? key,
+    required this.onPressed,
+    required this.child,
+    this.borderRadius,
+    this.width,
+    this.height = 44.0,
+    this.gradient = const LinearGradient(colors: [ColorConstant.gradiantDarkColor,ColorConstant.gradiantLightColor]),
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final borderRadius = this.borderRadius ?? BorderRadius.circular(0);
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        gradient: gradient,
+        borderRadius: borderRadius,
+      ),
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          shape: RoundedRectangleBorder(borderRadius: borderRadius),
+        ),
+        child: child,
+      ),
+    );
+  }
 }
 
 
