@@ -270,6 +270,7 @@ class _NoteDetailState extends State<NoteDetail> {
                       const SizedBox(
                         height: 10,
                       ),
+                      
                       Expanded(
                         child: Text(
                           currentData.desc.toString(),
